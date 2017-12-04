@@ -140,6 +140,16 @@ public class LoadTestDataDocumentBean {
         return result;
     }
 
+    public void duplicateDocument() {
+        if (selectedDocument != null) {
+            dialogTitle = "Edit Document";
+            withDocument = loadTestDataService.duplicateDocument(selectedDocument.getDocumentid());
+        } else {
+            new Document();
+            addFacesMessageBy(GROWL_MESSAGE, HelperUtil.getMsgInfo("Document is null."));
+        }
+    }
+
     public void newDocument() {
         dialogTitle = "Create Document";
         withDocument = new Document();

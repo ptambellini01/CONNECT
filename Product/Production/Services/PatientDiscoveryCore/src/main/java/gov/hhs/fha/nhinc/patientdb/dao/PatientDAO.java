@@ -568,11 +568,22 @@ public class PatientDAO extends GenericDAOImpl<Patient> {
                     personnameRec.setPatient(patient);
                     session.saveOrUpdate(personnameRec);
                 }
-
+                session.flush();
                 for (Identifier identifierRec : patient.getIdentifiers()) {
                     identifierRec.setPatient(patient);
                     session.saveOrUpdate(identifierRec);
                 }
+                session.flush();
+                for (Address addressRec : patient.getAddresses()) {
+                    addressRec.setPatient(patient);
+                    session.saveOrUpdate(addressRec);
+                }
+                session.flush();
+                for (Phonenumber phonenumberRec : patient.getPhonenumbers()) {
+                    phonenumberRec.setPatient(patient);
+                    session.saveOrUpdate(phonenumberRec);
+                }
+
                 tx.commit();
                 result = true;
             }

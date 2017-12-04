@@ -28,14 +28,18 @@ package gov.hhs.fha.nhinc.docrepository.adapter.dao;
 
 import gov.hhs.fha.nhinc.docrepository.adapter.model.Document;
 import gov.hhs.fha.nhinc.docrepository.adapter.model.DocumentQueryParams;
+import gov.hhs.fha.nhinc.docrepository.adapter.model.EventCode;
 import gov.hhs.fha.nhinc.persistence.HibernateUtilFactory;
 import gov.hhs.fha.nhinc.util.GenericDBUtils;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
@@ -59,7 +63,8 @@ public class DocumentDao {
     }
 
     public boolean delete(Document document) {
-        return GenericDBUtils.delete(getSession(), document);
+        return deleteTransaction(document);
+        // GenericDBUtils.delete(getSession(), document);
     }
 
     public Document findById(Long documentId) {
@@ -72,6 +77,46 @@ public class DocumentDao {
 
     public List<Document> findAllBy(long patientId) {
         return GenericDBUtils.findAllBy(getSession(), Document.class, Expression.eq("patientRecordId", patientId));
+    }
+
+    public Document readTransaction(Long documentid) {
+        List<Criterion> criterions = new ArrayList<>();
+        criterions.add(Expression.eq("id", documentid));
+        return readTransaction(criterions, true);
+    }
+
+    public Document readTransaction(List<Criterion> criterions, boolean allRecords) {
+        LOG.trace("DocumentDAO.readTransaction() -- begin");
+
+        Session session = null;
+        List<Document> queryList;
+        Document foundRecord = null;
+        try {
+            session = getSession();
+            LOG.info("Reading Record...");
+
+            // Build the criteria
+            Criteria aCriteria = session.createCriteria(Document.class);
+
+            if (CollectionUtils.isNotEmpty(criterions)) {
+                for (Criterion criterion : criterions) {
+                    aCriteria.add(criterion);
+                }
+            }
+
+            queryList = aCriteria.list();
+
+            if (CollectionUtils.isNotEmpty(queryList)) {
+                foundRecord = queryList.get(0);
+                foundRecord.getEventCodes().size();
+            }
+        } catch (HibernateException | NullPointerException e) {
+            LOG.error("Exception during read occured due to : {}", e.getMessage(), e);
+        } finally {
+            GenericDBUtils.closeSession(session);
+        }
+        LOG.trace("PatientDAO.readTransaction() -- end");
+        return foundRecord;
     }
 
     protected Session getSession() {
@@ -260,6 +305,71 @@ public class DocumentDao {
             GenericDBUtils.closeSession(sess);
         }
         return documents;
+    }
+
+    public boolean saveTransaction(Document document) {
+        LOG.trace("DocumentDAO.saveTransaction() -- begin");
+
+        Session session = null;
+        Transaction tx = null;
+        boolean result = false;
+
+        try {
+            if (document != null) {
+                session = getSession();
+                tx = session.beginTransaction();
+                session.saveOrUpdate(document);
+                session.flush();
+
+                for (EventCode EventCodeRec : document.getEventCodes()) {
+                    EventCodeRec.setDocument(document);
+                    session.saveOrUpdate(EventCodeRec);
+                }
+
+                tx.commit();
+                result = true;
+            }
+        } catch (HibernateException | NullPointerException e) {
+            LOG.error("Exception during save patient occured due to : {}", e.getMessage(), e);
+        } finally {
+            GenericDBUtils.closeSession(session);
+        }
+        LOG.trace("PatientDAO.saveTransaction() - End");
+        return result;
+    }
+
+    public boolean deleteTransaction(Document document) {
+        LOG.trace("DocumentDAO.deleteTransaction() -- begin");
+
+        Session session = null;
+        Transaction tx = null;
+        boolean result = false;
+
+        try {
+            LOG.info("Read document-records for delete");
+            Document deleteDocument = readTransaction(document.getDocumentid());
+            if (deleteDocument != null) {
+                session = getSession();
+                tx = session.beginTransaction();
+                LOG.info("Deleting Records...");
+
+                for (EventCode eventCodeRec : deleteDocument.getEventCodes()) {
+                    session.delete(eventCodeRec);
+                }
+
+                session.delete(deleteDocument);
+                tx.commit();
+                result = true;
+                LOG.debug("Document had been deleted: {}", deleteDocument.getDocumentid());
+
+            }
+        } catch (HibernateException | NullPointerException e) {
+            LOG.error("Exception during delete occured due to : {}", e.getMessage(), e);
+        } finally {
+            GenericDBUtils.closeSession(session);
+        }
+        LOG.trace("PatientDAO.deleteTransaction() - End");
+        return result;
     }
 
 }

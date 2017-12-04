@@ -83,6 +83,28 @@ public class LoadTestDataDBServiceImpl implements LoadTestDataService {
     }
 
     @Override
+    public Patient duplicatePatient(Long id) {
+        Patient duplicatePatient = patientDAO.readTransaction(id, true);
+        duplicatePatient.setPatientId(null);
+
+        for (Personname oldRec : duplicatePatient.getPersonnames()) {
+            oldRec.setPersonnameId(null);
+        }
+
+        for (Identifier oldRec : duplicatePatient.getIdentifiers()) {
+            oldRec.setIdentifierId(null);
+        }
+        for (Address oldRec : duplicatePatient.getAddresses()) {
+            oldRec.setAddressId(null);
+        }
+        for (Phonenumber oldRec : duplicatePatient.getPhonenumbers()) {
+            oldRec.setPhonenumberId(null);
+        }
+        patientDAO.saveTransaction(duplicatePatient);
+        return duplicatePatient;
+    }
+
+    @Override
     public boolean savePatient(Patient patient) throws LoadTestDataException {
         boolean actionResult;
         if (CollectionUtils.isNotEmpty(patient.getPersonnames())) {
@@ -244,7 +266,7 @@ public class LoadTestDataDBServiceImpl implements LoadTestDataService {
 
     @Override
     public boolean deleteDocument(Document document) {
-        return documentDAO.delete(document);
+        return documentDAO.deleteTransaction(document);
     }
 
     @Override
@@ -265,6 +287,19 @@ public class LoadTestDataDBServiceImpl implements LoadTestDataService {
     @Override
     public boolean saveDocument(Document document) throws LoadTestDataException {
         return documentDAO.save(document);
+    }
+
+    @Override
+    public Document duplicateDocument(Long documentid) {
+        Document duplicateDocument = documentDAO.readTransaction(documentid);
+        duplicateDocument.setDocumentid(null);
+
+        for (EventCode oldRec : duplicateDocument.getEventCodes()) {
+            oldRec.setEventCodeId(null);
+        }
+
+        documentDAO.saveTransaction(duplicateDocument);
+        return duplicateDocument;
     }
 
     @Override

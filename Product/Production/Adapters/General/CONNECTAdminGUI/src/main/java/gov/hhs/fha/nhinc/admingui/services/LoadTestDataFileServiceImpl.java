@@ -67,6 +67,12 @@ public class LoadTestDataFileServiceImpl implements LoadTestDataService {
     }
 
     @Override
+    public Patient duplicatePatient(Long id) {
+        LOG.info(LOG_UNSUPPORT_METHOD);
+        return new Patient();
+    }
+
+    @Override
     public boolean savePatient(Patient patient) throws LoadTestDataException {
         LOG.info(LOG_UNSUPPORT_METHOD);
         return false;
@@ -184,6 +190,12 @@ public class LoadTestDataFileServiceImpl implements LoadTestDataService {
     public boolean deleteDocument(Document document) {
         LOG.info(LOG_UNSUPPORT_METHOD);
         return false;
+    }
+
+    @Override
+    public Document duplicateDocument(Long id) {
+        LOG.info(LOG_UNSUPPORT_METHOD);
+        return new Document();
     }
 
     @Override

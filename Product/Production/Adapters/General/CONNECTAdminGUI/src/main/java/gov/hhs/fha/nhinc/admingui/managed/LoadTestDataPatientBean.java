@@ -356,6 +356,16 @@ public class LoadTestDataPatientBean {
         }
     }
 
+    public void duplicatePatient() {
+        if (selectedPatient != null) {
+            dialogTitle = "Edit Patient";
+            withPatient = loadTestDataService.duplicatePatient(selectedPatient.getPatientId());
+        } else {
+            newPatient();
+            addPatientErrorMessages(msgForSelectEdit("patient"));
+        }
+    }
+
     public void newPatient() {
         dialogTitle = "Create Patient";
         withPatient = null;
