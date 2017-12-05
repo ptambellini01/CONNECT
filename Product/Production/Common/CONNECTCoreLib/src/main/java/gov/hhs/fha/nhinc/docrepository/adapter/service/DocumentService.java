@@ -71,7 +71,7 @@ public class DocumentService {
                 Document ecDoc = getDocument(document.getDocumentid());
                 if (ecDoc != null) {
                     // Delete existing event codes
-                    Set<EventCode> eventCodes = ecDoc.getEventCodes();
+                    List<EventCode> eventCodes = ecDoc.getEventCodes();
                     if (eventCodes != null && !eventCodes.isEmpty()) {
                         EventCodeDao eventCodeDao = getEventCodeDao();
                         for (EventCode eventCode : eventCodes) {
@@ -142,7 +142,7 @@ public class DocumentService {
                 document = docs.get(0);
             } else {
                 throw new DocumentServiceException(
-                        "Single document match not found for document unique id: " + document.getDocumentUniqueId());
+                    "Single document match not found for document unique id: " + document.getDocumentUniqueId());
             }
         } else {
             if (document == null) {

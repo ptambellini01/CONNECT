@@ -45,10 +45,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import javax.activation.DataHandler;
 import javax.xml.bind.JAXBElement;
 import oasis.names.tc.ebxml_regrep.xsd.lcm._3.SubmitObjectsRequest;
@@ -323,7 +321,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
             RegistryError error = docRepoHelper.setRegistryError("find a required element", "",
                 DocRepoConstants.XDS_ERROR_CODE_MISSING_REQUEST_MESSAGE_DATA,
                 DocRepoConstants.XDS_MISSING_REQUEST_MESSAGE_DATA
-                + " ProvideAndRegisterDocumentSetRequestType element is null.");
+                    + " ProvideAndRegisterDocumentSetRequestType element is null.");
             errorList.getRegistryError().add(error);
 
         } else {
@@ -337,7 +335,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
             List<JAXBElement<? extends oasis.names.tc.ebxml_regrep.xsd.rim._3.IdentifiableType>> identifiableObjectList = regObjectList
                 .getIdentifiable();
             LOG.debug("There is/are " + identifiableObjectList.size()
-            + " identifiableObject(s) in this registryObjectsList.");
+                + " identifiableObject(s) in this registryObjectsList.");
 
             boolean requestHasReplacementAssociation = checkForReplacementAssociation(identifiableObjectList,
                 errorList);
@@ -382,7 +380,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
                 RegistryError error = docRepoHelper.setRegistryError("find a required element", "",
                     DocRepoConstants.XDS_ERROR_CODE_MISSING_DOCUMENT_METADATA,
                     DocRepoConstants.XDS_MISSING_DOCUMENT_METADATA
-                    + " extrinsicObject.getExternalIdentifier() element is null or empty.");
+                        + " extrinsicObject.getExternalIdentifier() element is null or empty.");
                 errorList.getRegistryError().add(error);
                 return null;
             }
@@ -590,8 +588,8 @@ public class AdapterComponentDocRepositoryOrchImpl {
     protected void logDeclaredType(
         List<JAXBElement<? extends oasis.names.tc.ebxml_regrep.xsd.rim._3.IdentifiableType>> identifiableObjectList,
         int i) {
-        LOG.debug("Item " + i + " identifiableObject is of DeclaredType: "
-            + identifiableObjectList.get(i).getDeclaredType());
+        LOG.debug(
+            "Item " + i + " identifiableObject is of DeclaredType: " + identifiableObjectList.get(i).getDeclaredType());
     }
 
     protected void setDocumentPidObjects(Document doc,
@@ -611,8 +609,8 @@ public class AdapterComponentDocRepositoryOrchImpl {
         String pid11 = docRepoHelper.extractPatientInfo(documentSlots, DocRepoConstants.XDS_SOURCE_PATIENT_INFO_PID11);
         doc.setPid11(pid11);
 
-        LOG.debug("pid3: " + pid3 + ", pid5: " + pid5 + ", pid7: " + pid7 + ", pid8: " + pid8 + ", pid11: " + pid11
-            + ".");
+        LOG.debug(
+            "pid3: " + pid3 + ", pid5: " + pid5 + ", pid7: " + pid7 + ", pid8: " + pid8 + ", pid11: " + pid11 + ".");
     }
 
     protected void setDocumentObjectsFromClassifications(Document doc,
@@ -678,8 +676,8 @@ public class AdapterComponentDocRepositoryOrchImpl {
             DocRepoConstants.XDS_HEALTHCARE_FACILITY_TYPE_CODE_CLASSIFICATION,
             DocRepoConstants.XDS_NODE_REPRESENTATION));
         doc.setFacilityCodeScheme(docRepoHelper.extractClassificationMetadata(classifications,
-            DocRepoConstants.XDS_HEALTHCARE_FACILITY_TYPE_CODE_CLASSIFICATION,
-            DocRepoConstants.XDS_CODING_SCHEME_SLOT, 0));
+            DocRepoConstants.XDS_HEALTHCARE_FACILITY_TYPE_CODE_CLASSIFICATION, DocRepoConstants.XDS_CODING_SCHEME_SLOT,
+            0));
         doc.setFacilityCodeDisplayName(docRepoHelper.extractClassificationMetadata(classifications,
             DocRepoConstants.XDS_HEALTHCARE_FACILITY_TYPE_CODE_CLASSIFICATION, DocRepoConstants.XDS_NAME));
 
@@ -717,8 +715,8 @@ public class AdapterComponentDocRepositoryOrchImpl {
             + "\n, formatCode: " + formatCode + "\n, typeCode: " + typeCode + "\n, formatCodeScheme: "
             + formatCodeScheme + "\n, formatCodeDisplayName: " + formatCodeDisplayName + "\n, practiceSetting: "
             + practiceSetting + "\n, practiceSettingScheme: " + practiceSettingScheme
-            + "\n, practiceSettingDisplayName: " + practiceSettingDisplayName + "\n, typeCodeScheme: "
-            + typeCodeScheme + "\n, typeCodeDisplayName: " + typeCodeDisplayName);
+            + "\n, practiceSettingDisplayName: " + practiceSettingDisplayName + "\n, typeCodeScheme: " + typeCodeScheme
+            + "\n, typeCodeDisplayName: " + typeCodeDisplayName);
     }
 
     protected boolean checkForReplacementAssociation(
@@ -769,8 +767,8 @@ public class AdapterComponentDocRepositoryOrchImpl {
     protected Object getIdentifiableObjectValue(
         List<JAXBElement<? extends oasis.names.tc.ebxml_regrep.xsd.rim._3.IdentifiableType>> identifiableObjectList,
         int i) {
-        LOG.debug("Item " + i + " identifiableObject is of DeclaredType: "
-            + identifiableObjectList.get(i).getDeclaredType());
+        LOG.debug(
+            "Item " + i + " identifiableObject is of DeclaredType: " + identifiableObjectList.get(i).getDeclaredType());
         return identifiableObjectList.get(i).getValue();
     }
 
@@ -810,7 +808,7 @@ public class AdapterComponentDocRepositoryOrchImpl {
     protected void extractEventCodes(List<oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType> classifications,
         gov.hhs.fha.nhinc.docrepository.adapter.model.Document doc) {
         LOG.trace("Begin extractEventCodes");
-        Set<EventCode> eventCodes = new HashSet<>();
+        List<EventCode> eventCodes = new ArrayList<>();
         for (oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType classification : classifications) {
             String classificationSchemeName = classification.getClassificationScheme();
             if (DocRepoConstants.XDS_EVENT_CODE_LIST_CLASSIFICATION.equals(classificationSchemeName)) {

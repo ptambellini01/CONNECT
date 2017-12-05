@@ -46,6 +46,7 @@ public class DocumentDaoTest {
     private final Session session = mock(Session.class);
     private Transaction transaction;
     private DocumentDao documentDao;
+    private Document deleteDocument = new Document();
 
     @Before
     public void setUp() {
@@ -54,6 +55,11 @@ public class DocumentDaoTest {
             @Override
             protected Session getSession() {
                 return session;
+            }
+
+            @Override
+            public Document readTransaction(Long documentid) {
+                return deleteDocument;
             }
         };
 
@@ -71,11 +77,10 @@ public class DocumentDaoTest {
 
     @Test
     public void testDelete() {
-        Document doc = new Document();
 
-        documentDao.delete(doc);
+        documentDao.delete(deleteDocument);
 
-        verify(session).delete(doc);
+        verify(session).delete(deleteDocument);
     }
 
     @Test

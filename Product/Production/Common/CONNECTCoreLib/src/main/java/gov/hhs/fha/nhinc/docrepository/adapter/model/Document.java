@@ -26,8 +26,9 @@
  */
 package gov.hhs.fha.nhinc.docrepository.adapter.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Data class for a document.
@@ -89,7 +90,8 @@ public class Document {
     private String NewDocumentUniqueId;
     private String NewRepositoryUniqueId;
     private boolean persistent;
-    private Set<EventCode> eventCodes;
+    // private Set<EventCode> eventCodes;
+    private List<EventCode> eventCodes = null;
     private Long patientRecordId;
     private String patientIdentifier;
 
@@ -574,12 +576,29 @@ public class Document {
 
     }
 
-    public Set<EventCode> getEventCodes() {
+    /*
+     * public List<EventCode> getEventCodes() { return eventCodes; }
+     * 
+     */
+    public List<EventCode> getEventCodes() {
+
+        if (eventCodes == null) {
+
+            eventCodes = new ArrayList<>();
+
+        }
+
         return eventCodes;
+
     }
 
-    public void setEventCodes(Set<EventCode> eventCodes) {
+    /*
+     * public void setEventCodes(Set<EventCode> eventCodes) { this.eventCodes = eventCodes; }
+     */
+    public void setEventCodes(List<EventCode> eventCodes) {
+
         this.eventCodes = eventCodes;
+
     }
 
     public Long getPatientRecordId() {
