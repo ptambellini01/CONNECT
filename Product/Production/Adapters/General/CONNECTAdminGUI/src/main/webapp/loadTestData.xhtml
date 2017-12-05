@@ -117,7 +117,7 @@
                                                             update=":patientSaveDlg :testdataTabview:patientsList"
                                                             oncomplete="PF('patientSaveDlg').show();"
                                                             disabled="#{loadTestDataPatientBean.disablePatientButtons}"
-                                                            styleClass="btn btn-warning" icon="ui-icon-copy">
+                                                            styleClass="duplicate-button" icon="ui-icon-copy">
                                                             <p:resetInput target=":patientSaveDlg"  />
                                                         </p:commandButton>
                                                         <p:commandButton id="deletePatient" update=":testdataTabview:patientsList"
@@ -211,7 +211,7 @@
                                                             update=":documentSaveDlg :testdataTabview:documentsList"
                                                             oncomplete="PF('documentSaveDlg').show();"
                                                             disabled="#{loadTestDataDocumentBean.disableDocumentButtons}"
-                                                            styleClass="btn btn-warning" icon="ui-icon-copy">
+                                                            styleClass="duplicate-button" icon="ui-icon-copy">
                                                             <p:resetInput target=":documentSaveDlg"  />
                                                         </p:commandButton>
                                                         <p:commandButton id="deleteDocument"

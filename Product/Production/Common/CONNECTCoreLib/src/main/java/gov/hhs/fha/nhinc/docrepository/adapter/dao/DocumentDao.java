@@ -64,7 +64,6 @@ public class DocumentDao {
 
     public boolean delete(Document document) {
         return deleteTransaction(document);
-        // GenericDBUtils.delete(getSession(), document);
     }
 
     public Document findById(Long documentId) {
@@ -82,10 +81,10 @@ public class DocumentDao {
     public Document readTransaction(Long documentid) {
         List<Criterion> criterions = new ArrayList<>();
         criterions.add(Expression.eq("id", documentid));
-        return readTransaction(criterions, true);
+        return readTransaction(criterions);
     }
 
-    public Document readTransaction(List<Criterion> criterions, boolean allRecords) {
+    public Document readTransaction(List<Criterion> criterions) {
         LOG.trace("DocumentDAO.readTransaction() -- begin");
 
         Session session = null;

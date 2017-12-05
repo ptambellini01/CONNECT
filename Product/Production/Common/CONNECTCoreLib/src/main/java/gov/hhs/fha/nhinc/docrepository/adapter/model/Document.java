@@ -90,7 +90,6 @@ public class Document {
     private String NewDocumentUniqueId;
     private String NewRepositoryUniqueId;
     private boolean persistent;
-    // private Set<EventCode> eventCodes;
     private List<EventCode> eventCodes = null;
     private Long patientRecordId;
     private String patientIdentifier;
@@ -576,10 +575,6 @@ public class Document {
 
     }
 
-    /*
-     * public List<EventCode> getEventCodes() { return eventCodes; }
-     * 
-     */
     public List<EventCode> getEventCodes() {
 
         if (eventCodes == null) {
@@ -592,9 +587,6 @@ public class Document {
 
     }
 
-    /*
-     * public void setEventCodes(Set<EventCode> eventCodes) { this.eventCodes = eventCodes; }
-     */
     public void setEventCodes(List<EventCode> eventCodes) {
 
         this.eventCodes = eventCodes;

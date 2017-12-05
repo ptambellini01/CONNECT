@@ -928,6 +928,16 @@ div[id*="cmOrgForm"] table.ui-panelgrid-domain {
 	background-color:#d2322d !important;
 }
 
+.duplicate-button {
+   background-color: #ffdb4d !important;
+   color: #ffffff !important;
+   border-color: #ffcc00 !important;
+}
+
+.duplicate-button:hover {
+   background-color:#ffd633 !important;
+}
+
 .refresh-button {
 	background-color: #ffdb4d !important;
 	color: #ffffff !important;
