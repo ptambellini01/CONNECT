@@ -266,7 +266,7 @@ public class LoadTestDataDBServiceImpl implements LoadTestDataService {
 
     @Override
     public boolean deleteDocument(Document document) {
-        return documentDAO.deleteTransaction(document);
+        return documentDAO.delete(document);
     }
 
     @Override
@@ -287,19 +287,6 @@ public class LoadTestDataDBServiceImpl implements LoadTestDataService {
     @Override
     public boolean saveDocument(Document document) throws LoadTestDataException {
         return documentDAO.save(document);
-    }
-
-    @Override
-    public Document duplicateDocument(Long documentid) {
-        Document duplicateDocument = documentDAO.readTransaction(documentid);
-        duplicateDocument.setDocumentid(null);
-
-        for (EventCode oldRec : duplicateDocument.getEventCodes()) {
-            oldRec.setEventCodeId(null);
-        }
-
-        documentDAO.saveTransaction(duplicateDocument);
-        return duplicateDocument;
     }
 
     @Override

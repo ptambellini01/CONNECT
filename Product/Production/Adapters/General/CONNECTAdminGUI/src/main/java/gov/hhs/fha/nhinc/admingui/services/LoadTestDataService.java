@@ -93,8 +93,6 @@ public interface LoadTestDataService {
 
     public Document getDocumentBy(Long documentId);
 
-    public Document duplicateDocument(Long documentId);
-
     public EventCode getEventCodeBy(Long eventCodeId);
 
     public boolean saveDocument(Document document) throws LoadTestDataException;

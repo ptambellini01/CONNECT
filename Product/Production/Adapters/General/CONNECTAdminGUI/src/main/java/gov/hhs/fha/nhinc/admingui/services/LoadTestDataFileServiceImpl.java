@@ -193,12 +193,6 @@ public class LoadTestDataFileServiceImpl implements LoadTestDataService {
     }
 
     @Override
-    public Document duplicateDocument(Long id) {
-        LOG.info(LOG_UNSUPPORT_METHOD);
-        return new Document();
-    }
-
-    @Override
     public boolean deleteEventCode(EventCode eventCode) {
         LOG.info(LOG_UNSUPPORT_METHOD);
         return false;
