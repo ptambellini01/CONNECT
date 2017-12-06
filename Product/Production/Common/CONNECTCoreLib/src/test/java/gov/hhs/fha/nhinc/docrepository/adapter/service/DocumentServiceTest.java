@@ -43,7 +43,9 @@ import gov.hhs.fha.nhinc.util.hash.SHA1HashCode;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -57,7 +59,7 @@ public class DocumentServiceTest {
         DocumentService documentService = getDocumentServiceWithMockDaos();
 
         Document mockDoc = mock(Document.class);
-        List<EventCode> eventCodes = new ArrayList<>();
+        Set<EventCode> eventCodes = new HashSet<>();
         EventCode eventCode = mock(EventCode.class);
         eventCodes.add(eventCode);
 

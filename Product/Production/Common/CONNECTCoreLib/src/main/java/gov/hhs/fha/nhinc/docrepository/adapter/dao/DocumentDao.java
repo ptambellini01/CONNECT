@@ -80,7 +80,7 @@ public class DocumentDao {
 
     public Document readTransaction(Long documentid) {
         List<Criterion> criterions = new ArrayList<>();
-        criterions.add(Expression.eq("id", documentid));
+        criterions.add(Expression.eq("documentid", documentid));
         return readTransaction(criterions);
     }
 

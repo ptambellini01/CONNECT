@@ -71,7 +71,7 @@ public class DocumentService {
                 Document ecDoc = getDocument(document.getDocumentid());
                 if (ecDoc != null) {
                     // Delete existing event codes
-                    List<EventCode> eventCodes = ecDoc.getEventCodes();
+                    Set<EventCode> eventCodes = ecDoc.getEventCodes();
                     if (eventCodes != null && !eventCodes.isEmpty()) {
                         EventCodeDao eventCodeDao = getEventCodeDao();
                         for (EventCode eventCode : eventCodes) {
