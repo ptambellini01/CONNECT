@@ -27,9 +27,8 @@
 package gov.hhs.fha.nhinc.patientlocationquery.adapter;
 
 import gov.hhs.fha.nhinc.adapterpatientlocationquerysecured.AdapterPatientLocationQuerySecuredPortType;
-import gov.hhs.fha.nhinc.common.nhinccommonadapter.AdapterPatientLocationQueryRequestType;
-import gov.hhs.fha.nhinc.common.nhinccommonadapter.AdapterPatientLocationQueryResponseType;
 import gov.hhs.fha.nhinc.common.nhinccommonadapter.AdapterPatientLocationQuerySecuredRequestType;
+import gov.hhs.fha.nhinc.common.nhinccommonadapter.AdapterPatientLocationQuerySecuredResponseType;
 import gov.hhs.fha.nhinc.patientlocationquery.services.PatientLocationQueryImpl;
 import javax.annotation.Resource;
 import javax.xml.ws.BindingType;
@@ -46,11 +45,12 @@ public class AdapterPatientLocationQuerySecured implements AdapterPatientLocatio
     private WebServiceContext context;
 
     @Override
-    public AdapterPatientLocationQueryResponseType adapterPatientLocationQuerySecured(
+    public AdapterPatientLocationQuerySecuredResponseType adapterPatientLocationQuerySecured(
         AdapterPatientLocationQuerySecuredRequestType adapterPatientLocationQuerySecuredRequest) {
 
-        AdapterPatientLocationQueryRequestType msg = new AdapterPatientLocationQueryRequestType();
-        return PatientLocationQueryImpl.getPatientLocationQuery().getAdapterPLQResponse(msg);
+        return PatientLocationQueryImpl.getPatientLocationQuery()
+            .getAdapterPLQSecuredResponse(adapterPatientLocationQuerySecuredRequest);
+
     }
 
     @Resource

@@ -48,8 +48,8 @@ public class AdapterPatientLocationQueryUnsecured implements AdapterPatientLocat
     public AdapterPatientLocationQueryResponseType adapterPatientLocationQuery(
         AdapterPatientLocationQueryRequestType adapterPatientLocationQueryRequest) {
 
-        AdapterPatientLocationQueryRequestType msg = new AdapterPatientLocationQueryRequestType();
-        return PatientLocationQueryImpl.getPatientLocationQuery().getAdapterPLQResponse(msg);
+        return PatientLocationQueryImpl.getPatientLocationQuery()
+            .getAdapterPLQResponse(adapterPatientLocationQueryRequest);
     }
 
     @Resource

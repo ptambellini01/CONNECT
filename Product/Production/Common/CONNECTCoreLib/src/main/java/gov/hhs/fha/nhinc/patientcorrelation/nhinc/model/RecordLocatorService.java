@@ -10,7 +10,7 @@ public class RecordLocatorService implements Serializable {
 
     private static final long serialVersionUID = -5756784032763662810L;
     private Long id;
-    private String rlsId;
+    private String requestedPatientId;
     private String patientId;
     private String assigningAuthorityId;
 
@@ -36,7 +36,7 @@ public class RecordLocatorService implements Serializable {
      * @return the rlsId
      */
     public String getRlsId() {
-        return rlsId;
+        return requestedPatientId;
     }
 
     public void setAssigningAuthorityId(String assigningAuthorityId) {
@@ -51,8 +51,8 @@ public class RecordLocatorService implements Serializable {
         this.patientId = patientId;
     }
 
-    public void setRlsId(String rlsId) {
-        this.rlsId = rlsId;
+    public void setRequestedPatientId(String rlsId) {
+        requestedPatientId = rlsId;
     }
 
 }
